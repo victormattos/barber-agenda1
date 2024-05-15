@@ -1,6 +1,9 @@
-@import url('https://fonts.cdnfonts.com/css/hanna-barbera-1960-font-4?styles=156522');
 
+@import url('https://fonts.cdnfonts.com/css/lumanosimo');
+
+                
 *{
+  font-family: 'Lumanosimo', sans-serif;                                             
   margin: 0px;
   padding: 0px;
 }
@@ -14,7 +17,7 @@ body{
 }
 
 .container {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Lumanosimo', sans-serif;; 
   font-size: larger;
   font-weight: normal;
   font-style: italic;
@@ -23,9 +26,7 @@ body{
 
 
 .title {
-  color: rgb(212,175,55) !important;
-  -webkit-text-stroke-width: 0.5px;
-  -webkit-text-stroke-color: black;
+  color: rgb(118, 2, 2) !important; 
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -34,7 +35,7 @@ body{
 }
 
 .subtitle{
-  color: rgb(212,175,55) !important;
+  color: rgb(22, 11, 187) !important;
   -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: black;
   display: flex;
