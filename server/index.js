@@ -51,15 +51,18 @@ server.put("/edit", (req, res) => {
     const { data } = req.body;
     const { hora } = req.body;
 
-    let sql = "UPDATE cliente SET nome = ?, AND email = ? AND fone = ? AND data = ? AND hora = ? WHERE id = ?";
-    db.query(sql, [nome, email, fone, data, hora,id], (err,result) =>{
-        if (err) {
-            console.log(err);
-        }else{
+    console.log("Server received edit request with the following data:", req.body);
 
+    let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
+    db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
+        if (err) {
+            console.error("Error updating data:", err);
+            res.status(500).send("Error updating data");
+        } else {
+            console.log("Data updated successfully:", result);
             res.send(result);
         }
-    })
+    });
 });
 
 server.delete("/delete/:index", (req,res) =>{

@@ -20,7 +20,7 @@ export default function FormDialog(props) {
 
 
     const handleEditValues = () => {
-        axios.put(`http://localhost:3001/edit/${editValues.id}`, {
+        axios.put(`http://localhost:3001/edit/`, {
             id: editValues.id,
             nome: editValues.nome,
             email: editValues.email,
@@ -29,12 +29,13 @@ export default function FormDialog(props) {
             hora: editValues.hora,
         })
         .then(response => {
-            console.log(response);
+            console.log("Server response:", response);
+            console.log("Edited data:", editValues);
+            handleClose();
         })
         .catch(error => {
-            console.error(error);
+            console.error("Error:", error);
         });
-        handleClose();
     }
 
     const handleDeleteCliente = () => {

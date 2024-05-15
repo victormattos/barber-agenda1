@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, backgroundImage} from 'react'
 import './App.css'
 import Axios from "axios";
 import Card from "./components/card";
+
 
 function App() {
 
@@ -40,18 +41,19 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container">
-          <h1 className="title">Barber Igor</h1>
-          <h3>Agendamento</h3>
+      <div className="container" >
+          <h1 className="title">Barber Igor Dias</h1>
+          <h3 className="subtitle">Agendamento </h3>
           <div className="register-box">
               <input className="register-input" type="text" name="nome" placeholder="Nome" onChange={handleChangeValues} />
               <input className="register-input" type="text" name="email" placeholder="E-mail" onChange={handleChangeValues} />
               <input className="register-input" type="text" name="fone" placeholder="Telefone" onChange={handleChangeValues} />
-              <input className="register-input" type="text" name="data" placeholder="Data" onChange={handleChangeValues} />
-              <input className="register-input" type="text" name="hora" placeholder="Hora" onChange={handleChangeValues} />
+              <input className="register-input" type="date" name="data" placeholder="Data" onChange={handleChangeValues} />
+              <input className="register-input" type="time" name="hora" placeholder="Hora" onChange={handleChangeValues} />
               <button className="register-button" onClick={handleClickButton}>Agendar</button>
           </div>
           <br/>
+
           <div className="cards">
               {typeof cliente !== 'undefined' &&
                   cliente.map((cliente) => {
@@ -74,3 +76,4 @@ function App() {
 }
 
 export default App
+
