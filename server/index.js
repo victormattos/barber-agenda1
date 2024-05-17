@@ -17,15 +17,16 @@ const db = mysql.createPool({
 app.use(express.json());
 app.use(cors());
 
+// Rotas
 app.post("/register", (req, res) => {
     const { nome, email, fone, data, hora } = req.body;
-
-    let sql = "INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)"
+    let sql = "INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)";
     db.query(sql, [nome, email, fone, data, hora], (err, result) => {
         if (err) {
             console.log(err);
         } else {
             console.log(result);
+            res.send(result);
         }
     });
 });
@@ -43,9 +44,7 @@ app.get("/cliente", (req, res) => {
 
 app.put("/edit", (req, res) => {
     const { id, nome, email, fone, data, hora } = req.body;
-
     console.log("Server received edit request with the following data:", req.body);
-
     let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
     db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
         if (err) {
@@ -60,7 +59,6 @@ app.put("/edit", (req, res) => {
 
 app.delete("/delete/:index", (req, res) => {
     const { index } = req.params;
-
     let sql = "DELETE FROM cliente WHERE id = ?";
     db.query(sql, [index], (err, result) => {
         err ? console.log(err) : res.send(result);
