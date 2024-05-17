@@ -1,9 +1,7 @@
-// Carregar variáveis de ambiente do arquivo .env
-require('dotenv').config();
-
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 
 const app = express();
 const port = process.env.PORT || 3001;
