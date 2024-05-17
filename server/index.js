@@ -1,55 +1,48 @@
 const express = require('express');
-const server = express();
 const mysql = require('mysql');
 const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 3001;
 
 const db = mysql.createPool({
-    host: "mysql://root:kpivZbloiGjqEqiAievdHVVxITuXxiHF@roundhouse.proxy.rlwy.net:39314/railway",
-    user: "root",
-    password: "kpivZbloiGjqEqiAievdHVVxITuXxiHF",
-    database: "MySQL",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
-server.use(express.json());
-server.use(cors());
+app.use(express.json());
+app.use(cors());
 
-server.post("/register", (req, res) => {
-    const { nome } = req.body;
-    const { email } = req.body;
-    const { fone } = req.body;
-    const { data } = req.body;
-    const { hora } = req.body;
+app.post("/register", (req, res) => {
+    const { nome, email, fone, data, hora } = req.body;
 
     let sql = "INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)"
-    db.query(sql, [nome, email, fone, data, hora], (err,result) =>{
+    db.query(sql, [nome, email, fone, data, hora], (err, result) => {
         if (err) {
             console.log(err);
-        }else{
+        } else {
             console.log(result);
         }
-    })
+    });
 });
 
-server.get("/cliente", (req, res) => {
-
+app.get("/cliente", (req, res) => {
     let sql = "SELECT * FROM cliente";
-    db.query(sql, (err,result) =>{
+    db.query(sql, (err, result) => {
         if (err) {
             console.log(err);
-        }else{
+        } else {
             res.send(result);
         }
-
-    })
+    });
 });
 
-server.put("/edit", (req, res) => {
-    const { id } = req.body;
-    const { nome } = req.body;
-    const { email } = req.body;
-    const { fone } = req.body;
-    const { data } = req.body;
-    const { hora } = req.body;
+app.put("/edit", (req, res) => {
+    const { id, nome, email, fone, data, hora } = req.body;
 
     console.log("Server received edit request with the following data:", req.body);
 
@@ -65,12 +58,13 @@ server.put("/edit", (req, res) => {
     });
 });
 
-server.delete("/delete/:index", (req,res) =>{
-    const { index } = req.params
+app.delete("/delete/:index", (req, res) => {
+    const { index } = req.params;
 
-    let sql = "DELETE FROM cliente WHERE id = ?"
-    db.query(sql, [index], (err,result) =>{err ? console.log(err) : res.send(result)})
-})
-server.listen(3001, () =>
-    console.log("Running in the port 3001")
-);
+    let sql = "DELETE FROM cliente WHERE id = ?";
+    db.query(sql, [index], (err, result) => {
+        err ? console.log(err) : res.send(result);
+    });
+});
+
+app.listen(port, () => console.log(`Running in the port ${port}`));
