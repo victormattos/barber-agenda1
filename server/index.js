@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -53,7 +53,6 @@ app.get('/cliente', (req, res) => {
 // Rota para editar um cliente
 app.put('/edit', (req, res) => {
     const { id, nome, email, fone, data, hora } = req.body;
-    console.log("Server received edit request with the following data:", req.body);
     let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
     db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
         if (err) {
@@ -81,3 +80,4 @@ app.delete('/delete/:index', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Running in the port ${port}`));
+
