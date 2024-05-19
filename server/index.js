@@ -13,10 +13,13 @@ const db = mysql.createPool({
 });
 
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+    origin: 'https://barber-agenda1.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+}));
 
-// ROTA PARA REGISTRO
-server.post("/register", (req, res) => {
+server.post("/api/register", (req, res) => {
     const { nome, email, fone, data, hora } = req.body;
 
     let sql = "INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)";
@@ -30,9 +33,7 @@ server.post("/register", (req, res) => {
     });
 });
 
-//ROTA PARA CLIENTE
-
-server.get("/cliente", (req, res) => {
+server.get("/api/cliente", (req, res) => {
     let sql = "SELECT * FROM cliente";
     db.query(sql, (err, result) => {
         if (err) {
@@ -44,7 +45,7 @@ server.get("/cliente", (req, res) => {
     });
 });
 
-server.put("/edit", (req, res) => {
+server.put("/api/edit", (req, res) => {
     const { id, nome, email, fone, data, hora } = req.body;
 
     let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
@@ -58,9 +59,7 @@ server.put("/edit", (req, res) => {
     });
 });
 
-//ROTA PARA DELETAR CLIENTE
-
-server.delete("/delete/:index", (req, res) => {
+server.delete("/api/delete/:index", (req, res) => {
     const { index } = req.params;
 
     let sql = "DELETE FROM cliente WHERE id = ?";
@@ -74,9 +73,8 @@ server.delete("/delete/:index", (req, res) => {
     });
 });
 
-//ROTA TESTE 
 server.get('/api/test', (req, res) => {
-  res.send('API funcionando!');
+    res.send('API funcionando!');
 });
 
 server.listen(3001, () => console.log("Running in the port 3001"));
