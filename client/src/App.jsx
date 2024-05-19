@@ -6,7 +6,7 @@ import Card from "./components/card";
 
 function App() {
 
-    const baseUrl = "http://localhost:3001"
+    const baseUrl = "https://barber-agenda1.vercel.app/api"
 
     const [values, setValues] = useState();
     const [cliente, setCliente] = useState();

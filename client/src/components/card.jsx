@@ -15,7 +15,7 @@ const Card = (props) => {
     };
 
     const handleDeleteCliente = () => {
-        axios.delete(`http://localhost:3001/delete/${props.id}`);
+        axios.delete(`https://barber-agenda1.vercel.app/api/delete/${props.id}`);
     }
 
     return (
