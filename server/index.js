@@ -15,6 +15,7 @@ const db = mysql.createPool({
 server.use(express.json());
 server.use(cors());
 
+// ROTA PARA REGISTRO
 server.post("/register", (req, res) => {
     const { nome, email, fone, data, hora } = req.body;
 
@@ -28,6 +29,8 @@ server.post("/register", (req, res) => {
         }
     });
 });
+
+//ROTA PARA CLIENTE
 
 server.get("/cliente", (req, res) => {
     let sql = "SELECT * FROM cliente";
@@ -55,6 +58,8 @@ server.put("/edit", (req, res) => {
     });
 });
 
+//ROTA PARA DELETAR CLIENTE
+
 server.delete("/delete/:index", (req, res) => {
     const { index } = req.params;
 
@@ -69,22 +74,9 @@ server.delete("/delete/:index", (req, res) => {
     });
 });
 
+//ROTA TESTE 
 server.get('/api/test', (req, res) => {
   res.send('API funcionando!');
 });
 
 server.listen(3001, () => console.log("Running in the port 3001"));
-
-    const { index } = req.params;
-    let sql = "DELETE FROM cliente WHERE id = ?";
-    db.query(sql, [index], (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send(err);
-        } else {
-            res.send(result);
-        }
-    });
-});
-
-app.listen(port, () => console.log(`Running in the port ${port}`));
