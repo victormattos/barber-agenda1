@@ -1,17 +1,17 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '1234',
+    database: process.env.DB_NAME || 'agendamento',
+    port: process.env.DB_PORT || 3306
 });
 
 app.use(express.json());
@@ -53,7 +53,6 @@ app.get('/cliente', (req, res) => {
 // Rota para editar um cliente
 app.put('/edit', (req, res) => {
     const { id, nome, email, fone, data, hora } = req.body;
-    console.log("Server received edit request with the following data:", req.body);
     let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
     db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
         if (err) {
