@@ -19,7 +19,7 @@ export default function FormDialog(props) {
     });
 
     const handleEditValues = () => {
-        axios.put(`https://barber-agenda1.vercel.app/api/edit/`, {
+        axios.put(`https://igor-dias-barber-agendamentos-production.up.railway.app/api`, {
             id: editValues.id,
             nome: editValues.nome,
             email: editValues.email,
@@ -38,7 +38,7 @@ export default function FormDialog(props) {
     }
 
     const handleDeleteCliente = () => {
-        axios.delete(`https://barber-agenda1.vercel.app/api/delete/${editValues.id}`)
+        axios.delete(`https://igor-dias-barber-agendamentos-production.up.railway.app/api/delete/${editValues.id}`)
         .then(response => {
             console.log("Deleted client:", editValues.id);
             handleClose();
