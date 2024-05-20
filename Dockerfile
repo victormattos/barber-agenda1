@@ -1,30 +1,33 @@
-# Usar a imagem Node.js como base
+# Use uma imagem oficial do Node.js como imagem base
 FROM node:14
 
-# Definir o diretório de trabalho
+# Cria um diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos package.json e package-lock.json para o diretório de trabalho
+# Copia os arquivos de dependência
 COPY ./server/package*.json ./server/
 COPY ./client/package*.json ./client/
 
-# Instalar as dependências do back-end
+# Instala as dependências do servidor
 RUN cd ./server && npm install
 
-# Instalar as dependências do front-end
+# Instala as dependências do cliente
 RUN cd ./client && npm install
 
-# Copiar o código do back-end para o contêiner
+# Copia os arquivos da aplicação
 COPY ./server ./server
-
-# Copiar o código do front-end para o contêiner
 COPY ./client ./client
 
-# Construir o front-end
-RUN cd ./client && npm run build
+# Define as variáveis de ambiente
+ENV MYSQLHOST=$MYSQLHOST
+ENV MYSQLUSER=$MYSQLUSER
+ENV MYSQLPASSWORD=$MYSQLPASSWORD
+ENV MYSQLDATABASE=$MYSQLDATABASE
+ENV MYSQLPORT=$MYSQLPORT
 
-# Expor a porta da aplicação
+# Expõe a porta que a aplicação irá rodar
 EXPOSE 3001
 
-# Comando para iniciar o servidor
+# Comando para rodar a aplicação
 CMD ["node", "server/index.js"]
+
