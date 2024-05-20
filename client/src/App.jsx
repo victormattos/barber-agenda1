@@ -1,10 +1,10 @@
-import React, {useState, useEffect, backgroundImage} from 'react'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import './App.css';
 import Axios from "axios";
 import Card from "./components/card";
 
 function App() {
-    const baseUrl = "https://barber-agenda1.vercel.app/api"
+    const baseUrl = "https://<seu_projeto>.up.railway.app/api"; // Atualize para o domínio fornecido pelo Railway
 
     const [values, setValues] = useState();
     const [cliente, setCliente] = useState();
@@ -14,10 +14,9 @@ function App() {
             ...prevValue,
             [value.target.name]: value.target.value,
         }));
-    }
+    };
 
     const handleClickButton = () => {
-        console.log("Sending data:", values);
         Axios.post(`${baseUrl}/register`, {
             nome: values.nome,
             email: values.email,
@@ -25,11 +24,11 @@ function App() {
             data: values.data,
             hora: values.hora,
         }).then((response) => {
-            console.log("Server response:", response);
+            console.log(response);
         }).catch((error) => {
             console.error("Error:", error);
         });
-    }
+    };
 
     useEffect(() => {
         Axios.get(`${baseUrl}/cliente`)
@@ -46,7 +45,7 @@ function App() {
         <div className="App">
             <div className="container">
                 <h1 className="title">Barber Igor Dias</h1>
-                <h3 className="subtitle">Agendamento </h3>
+                <h3 className="subtitle">Agendamento</h3>
                 <div className="register-box">
                     <input className="register-input" type="text" name="nome" placeholder="Nome" onChange={handleChangeValues} />
                     <input className="register-input" type="text" name="email" placeholder="E-mail" onChange={handleChangeValues} />
@@ -55,7 +54,7 @@ function App() {
                     <input className="register-input" type="time" name="hora" placeholder="Hora" onChange={handleChangeValues} />
                     <button className="register-button" onClick={handleClickButton}>Agendar</button>
                 </div>
-                <br/>
+                <br />
                 <div className="cards">
                     {typeof cliente !== 'undefined' &&
                         cliente.map((cliente) => {
