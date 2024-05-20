@@ -4,7 +4,7 @@ import Axios from "axios";
 import Card from "./components/card";
 
 function App() {
-    const baseUrl = "https://igor-dias-barber-agendamentos-production.up.railway.app/api"; // Atualize para o domínio fornecido pelo Railway
+    const baseUrl = "https://igor-dias-barber-agendamentos-production.up.railway.app/api";
 
     const [values, setValues] = useState();
     const [cliente, setCliente] = useState();
@@ -75,3 +75,4 @@ function App() {
 }
 
 export default App;
+
