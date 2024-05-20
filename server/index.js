@@ -14,7 +14,7 @@ const db = mysql.createPool({
 
 server.use(express.json());
 server.use(cors({
-    origin: 'https://<seu_projeto>.up.railway.app',
+    origin: 'https://igor-dias-barber-agendamentos-production.up.railway.app', // Atualize para o domínio fornecido pelo Railway
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
