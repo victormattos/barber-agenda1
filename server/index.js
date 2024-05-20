@@ -14,7 +14,7 @@ const db = mysql.createPool({
 
 server.use(express.json());
 server.use(cors({
-    origin: 'https://barber-agenda1.vercel.app',
+    origin: 'https://<seu_projeto>.up.railway.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
