@@ -4,7 +4,7 @@ FROM node:14
 # Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar o package.json e o package-lock.json para o diretório de trabalho
+# Copiar os arquivos package.json e package-lock.json para o diretório de trabalho
 COPY ./server/package*.json ./server/
 COPY ./client/package*.json ./client/
 
