@@ -4,7 +4,7 @@ import Axios from "axios";
 import Card from "./components/card";
 
 function App() {
-    const baseUrl = "https://<seu_projeto>.up.railway.app/api"; // Atualize para o domínio fornecido pelo Railway
+    const baseUrl = "https://<seu_dominio_do_elastic_beanstalk>/api"; // Atualize para o domínio fornecido pelo Elastic Beanstalk
 
     const [values, setValues] = useState();
     const [cliente, setCliente] = useState();
