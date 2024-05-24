@@ -75,6 +75,6 @@ server.delete('/api/delete/:id', (req, res) => {
     });
 });
 
-server.listen(3001, () => {
-    console.log('Running in the port 3001');
+server.listen(8080, () => {
+    console.log('Running in the port 8080');
 });
