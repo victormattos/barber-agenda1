@@ -28,17 +28,27 @@ server.get('/api/test', (req, res) => {
     res.send('API funcionando!');
 });
 
+server.get('/api/test-db', (req, res) => {
+    db.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
+        if (error) {
+            console.error('Error connecting to the database:', error);
+            res.status(500).send('Erro ao conectar ao banco de dados.');
+        } else {
+            res.send(`Database connection successful: ${results[0].solution}`);
+        }
+    });
+});
+
 server.post('/api/register', (req, res) => {
     const { nome, email, fone, data, hora } = req.body;
-    console.log("Dados recebidos para registro:", { nome, email, fone, data, hora });
 
     let sql = 'INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)';
     db.query(sql, [nome, email, fone, data, hora], (err, result) => {
         if (err) {
-            console.log("Erro ao registrar cliente:", err);
+            console.log(err);
             res.status(500).send('Erro ao registrar cliente.');
         } else {
-            console.log("Cliente registrado com sucesso:", result);
+            console.log(result);
             res.status(201).send('Cliente registrado com sucesso.');
         }
     });
@@ -48,7 +58,7 @@ server.get('/api/cliente', (req, res) => {
     let sql = 'SELECT * FROM cliente';
     db.query(sql, (err, result) => {
         if (err) {
-            console.log("Erro ao buscar clientes:", err);
+            console.log(err);
             res.status(500).send('Erro ao buscar clientes.');
         } else {
             res.send(result);
@@ -62,7 +72,7 @@ server.put('/api/edit', (req, res) => {
     let sql = 'UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?';
     db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
         if (err) {
-            console.log("Erro ao editar cliente:", err);
+            console.log(err);
             res.status(500).send('Erro ao editar cliente.');
         } else {
             res.send('Cliente editado com sucesso.');
@@ -76,7 +86,7 @@ server.delete('/api/delete/:id', (req, res) => {
     let sql = 'DELETE FROM cliente WHERE id = ?';
     db.query(sql, [id], (err, result) => {
         if (err) {
-            console.log("Erro ao deletar cliente:", err);
+            console.log(err);
             res.status(500).send('Erro ao deletar cliente.');
         } else {
             res.send('Cliente deletado com sucesso.');
