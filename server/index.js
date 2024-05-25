@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const server = express();
 const mysql = require('mysql');
 const cors = require('cors');
+
+const server = express();
 
 const db = mysql.createPool({
     host: process.env.DB_HOST,
@@ -13,64 +14,70 @@ const db = mysql.createPool({
 });
 
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+    origin: 'https://igor-dias-barber-agendamentos.vercel.app' // Substitua com o domínio do seu front-end no Vercel
+}));
 
-server.post("/register", (req, res) => {
+// Endpoint de teste
+server.get('/api/test', (req, res) => {
+    res.send('API funcionando!');
+});
+
+server.post('/api/register', (req, res) => {
     const { nome, email, fone, data, hora } = req.body;
 
-    let sql = "INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)";
+    let sql = 'INSERT INTO cliente (nome, email, fone, data, hora) VALUES (?,?,?,?,?)';
     db.query(sql, [nome, email, fone, data, hora], (err, result) => {
         if (err) {
             console.log(err);
-            res.status(500).send("Error inserting data");
+            res.status(500).send('Erro ao registrar cliente.');
         } else {
-            res.send(result);
+            console.log(result);
+            res.status(201).send('Cliente registrado com sucesso.');
         }
     });
 });
 
-server.get("/cliente", (req, res) => {
-    let sql = "SELECT * FROM cliente";
+server.get('/api/cliente', (req, res) => {
+    let sql = 'SELECT * FROM cliente';
     db.query(sql, (err, result) => {
         if (err) {
             console.log(err);
-            res.status(500).send("Error retrieving data");
+            res.status(500).send('Erro ao buscar clientes.');
         } else {
             res.send(result);
         }
     });
 });
 
-server.put("/edit", (req, res) => {
+server.put('/api/edit', (req, res) => {
     const { id, nome, email, fone, data, hora } = req.body;
 
-    let sql = "UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?";
+    let sql = 'UPDATE cliente SET nome = ?, email = ?, fone = ?, data = ?, hora = ? WHERE id = ?';
     db.query(sql, [nome, email, fone, data, hora, id], (err, result) => {
         if (err) {
-            console.error("Error updating data:", err);
-            res.status(500).send("Error updating data");
+            console.log(err);
+            res.status(500).send('Erro ao editar cliente.');
         } else {
-            res.send(result);
+            res.send('Cliente editado com sucesso.');
         }
     });
 });
 
-server.delete("/delete/:index", (req, res) => {
-    const { index } = req.params;
+server.delete('/api/delete/:id', (req, res) => {
+    const { id } = req.params;
 
-    let sql = "DELETE FROM cliente WHERE id = ?";
-    db.query(sql, [index], (err, result) => {
+    let sql = 'DELETE FROM cliente WHERE id = ?';
+    db.query(sql, [id], (err, result) => {
         if (err) {
             console.log(err);
-            res.status(500).send("Error deleting data");
+            res.status(500).send('Erro ao deletar cliente.');
         } else {
-            res.send(result);
+            res.send('Cliente deletado com sucesso.');
         }
     });
 });
 
-server.get('/api/test', (req, res) => {
-  res.send('API funcionando!');
+server.listen(8080, () => {
+    console.log('Running on port 8080');
 });
-
-server.listen(3001, () => console.log("Running in the port 3001"));
