@@ -15,7 +15,7 @@ const Card = (props) => {
     };
 
     const handleDeleteCliente = () => {
-        axios.delete(`https://barber-agenda1.vercel.app/api/delete/${props.id}`);
+        axios.delete(`https://igor-dias-barber-agendamentos-production.up.railway.app/api/delete/${props.id}`);
     }
 
     return (
