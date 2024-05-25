@@ -78,6 +78,6 @@ server.delete('/api/delete/:id', (req, res) => {
     });
 });
 
-server.listen(8080, () => {
-    console.log('Running on port 8080');
+server.listen(process.env.PORT || 8080, () => {
+    console.log('Running on port ' + (process.env.PORT || 8080));
 });
