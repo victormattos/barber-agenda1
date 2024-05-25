@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://igor-dias-barber-agendamentos-production.up.railway.app',
+        target: 'https://igor-dias-barber-agendamentos-production.up.railway.app/api',
         changeOrigin: true,
         secure: false,
       },
