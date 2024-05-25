@@ -6,16 +6,21 @@ const cors = require('cors');
 const server = express();
 
 const db = mysql.createPool({
+    connectionLimit: 10,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+    connectTimeout: 10000,
+    acquireTimeout: 10000,
+    waitForConnections: true,
+    queueLimit: 0
 });
 
 server.use(express.json());
 server.use(cors({
-    origin: 'https://igor-dias-barber-agendamentos.vercel.app' // Substitua com o domínio do seu front-end no Vercel
+    origin: 'https://igor-dias-barber-agendamentos.vercel.app' // Atualize com sua URL do Vercel
 }));
 
 // Endpoint de teste
@@ -78,6 +83,7 @@ server.delete('/api/delete/:id', (req, res) => {
     });
 });
 
-server.listen(process.env.PORT || 8080, () => {
-    console.log('Running on port ' + (process.env.PORT || 8080));
+const port = process.env.PORT || 8080;
+server.listen(port, () => {
+    console.log(`Running on port ${port}`);
 });
