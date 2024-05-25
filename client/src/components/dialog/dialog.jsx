@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export default function FormDialog(props) {
@@ -18,9 +18,8 @@ export default function FormDialog(props) {
         hora: props.hora,
     });
 
-
     const handleEditValues = () => {
-        axios.put(`http://localhost:3001/edit/`, {
+        axios.put(`https://igor-dias-barber-agendamentos-production.up.railway.app/api/edit`, {
             id: editValues.id,
             nome: editValues.nome,
             email: editValues.email,
@@ -39,15 +38,21 @@ export default function FormDialog(props) {
     }
 
     const handleDeleteCliente = () => {
-        axios.delete(`http://localhost:3001/delete/${editValues.id}`)
+        axios.delete(`https://igor-dias-barber-agendamentos-production.up.railway.app/api/delete/${editValues.id}`)
+        .then(response => {
+            console.log("Deleted client:", editValues.id);
+            handleClose();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
     }
 
-    const handleChangeValues = (value)=>{
-        setEditValues(prevValues=>({
-                ...prevValues,
-                [value.target.id]: value.target.value,
-            })
-        )
+    const handleChangeValues = (value) => {
+        setEditValues(prevValues => ({
+            ...prevValues,
+            [value.target.id]: value.target.value,
+        }));
     }
 
     const handleClickOpen = () => {
@@ -60,7 +65,6 @@ export default function FormDialog(props) {
 
     return (
         <div>
-
             <Dialog open={props.open} onClose={handleClose}>
                 <DialogTitle>Edit</DialogTitle>
                 <DialogContent>
@@ -113,7 +117,7 @@ export default function FormDialog(props) {
                         margin="dense"
                         id="hora"
                         label="Hora"
-                        defaultValue={props.category}
+                        defaultValue={props.hora}
                         type="text"
                         onChange={handleChangeValues}
                         fullWidth
