@@ -6,8 +6,8 @@ import Card from "./components/card";
 function App() {
     const baseUrl = "https://igor-dias-barber-agendamentos-production.up.railway.app/api";
 
-    const [values, setValues] = useState({});
-    const [cliente, setCliente] = useState([]);
+    const [values, setValues] = useState();
+    const [cliente, setCliente] = useState();
 
     const handleChangeValues = (value) => {
         setValues((prevValue) => ({
@@ -25,13 +25,12 @@ function App() {
             hora: values.hora,
         }).then((response) => {
             console.log(response);
-            fetchClientes(); // Atualiza a lista de clientes após registrar um novo cliente
         }).catch((error) => {
             console.error("Error:", error);
         });
     };
 
-    const fetchClientes = () => {
+    useEffect(() => {
         Axios.get(`${baseUrl}/cliente`)
             .then((response) => {
                 console.log("Fetched clients:", response.data);
@@ -40,10 +39,6 @@ function App() {
             .catch((error) => {
                 console.error("Error fetching clients:", error);
             });
-    };
-
-    useEffect(() => {
-        fetchClientes();
     }, []);
 
     return (
@@ -61,17 +56,18 @@ function App() {
                 </div>
                 <br />
                 <div className="cards">
-                    {cliente.length > 0 && cliente.map((cliente) => {
-                        return <Card
-                            key={cliente.id}
-                            id={cliente.id}
-                            nome={cliente.nome}
-                            email={cliente.email}
-                            fone={cliente.fone}
-                            data={cliente.data}
-                            hora={cliente.hora}
-                        />;
-                    })}
+                    {typeof cliente !== 'undefined' &&
+                        cliente.map((cliente) => {
+                            return <Card
+                                key={cliente.id}
+                                id={cliente.id}
+                                nome={cliente.nome}
+                                email={cliente.email}
+                                fone={cliente.fone}
+                                data={cliente.data}
+                                hora={cliente.hora}
+                            />;
+                        })}
                 </div>
             </div>
         </div>
