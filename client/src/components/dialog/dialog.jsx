@@ -19,7 +19,7 @@ export default function FormDialog(props) {
     });
 
     const handleEditValues = () => {
-        axios.put(`https://igor-dias-barber-agendamentos-production.up.railway.app/api`, {
+        axios.put(`https://igor-dias-barber-agendamentos-production.up.railway.app/api/`, {
             id: editValues.id,
             nome: editValues.nome,
             email: editValues.email,
