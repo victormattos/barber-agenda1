@@ -7,11 +7,11 @@ const server = express();
 
 const db = mysql.createPool({
     connectionLimit: 10,
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
+    host: process.env.DB_HOST || 'roundhouse.proxy.rlwy.net',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || 'kpivZbIoiGJqEqiAievdHVvxITuXxiHF',
+    database: process.env.DB_NAME || 'cadastro_barbearia',
+    port: process.env.DB_PORT || 39314,
     connectTimeout: 10000,
     acquireTimeout: 10000,
     waitForConnections: true,
@@ -23,20 +23,21 @@ server.use(cors({
     origin: 'https://igor-dias-barber-agendamentos.vercel.app' // Atualize com sua URL do Vercel
 }));
 
+// Endpoint de teste de conexão com o banco de dados
+server.get('/api/test-db', (req, res) => {
+    db.query('SELECT 1', (err, results) => {
+        if (err) {
+            console.error('Erro ao conectar ao banco de dados:', err);
+            res.status(500).send('Erro ao conectar ao banco de dados.');
+        } else {
+            res.send('Conexão ao banco de dados bem-sucedida!');
+        }
+    });
+});
+
 // Endpoint de teste
 server.get('/api/test', (req, res) => {
     res.send('API funcionando!');
-});
-
-server.get('/api/test-db', (req, res) => {
-    db.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
-        if (error) {
-            console.error('Error connecting to the database:', error);
-            res.status(500).send('Erro ao conectar ao banco de dados.');
-        } else {
-            res.send(`Database connection successful: ${results[0].solution}`);
-        }
-    });
 });
 
 server.post('/api/register', (req, res) => {
