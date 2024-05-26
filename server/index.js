@@ -7,11 +7,11 @@ const server = express();
 
 const db = mysql.createPool({
     connectionLimit: 10,
-    host: process.env.DB_HOST || 'roundhouse.proxy.rlwy.net',
+    host: process.env.DB_HOST || 'mysql-production-4854.up.railway.app',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'kpivZbIoiGJqEqiAievdHVvxITuXxiHF',
+    password: process.env.DB_PASSWORD || '<sua_senha>',
     database: process.env.DB_NAME || 'cadastro_barbearia',
-    port: process.env.DB_PORT || 39314,
+    port: process.env.DB_PORT || 3306,
     connectTimeout: 10000,
     acquireTimeout: 10000,
     waitForConnections: true,
